@@ -47,7 +47,6 @@ jobs:
           cat > tests/test_pipeline_preliminaries.py << 'EOF'
           import pytest
           import torch
-          from unittest.mock import patch
           from transformers import AutoModelForCausalLM, AutoTokenizer
 
           def generate_prompts(n: int = 5):
@@ -118,7 +117,10 @@ jobs:
               assert config["black_box"] is True
               assert config["query_budget_usd"] > 0
               torch.manual_seed(config["seed"])
-              assert torch.rand(1).item() == torch.rand(1).item()
+              val1 = torch.rand(1).item()
+              torch.manual_seed(config["seed"])
+              val2 = torch.rand(1).item()
+              assert val1 == val2
           EOF
 
           cat > tests/smoke_test_pipeline.py << 'EOF'
@@ -182,4 +184,5 @@ jobs:
           val2 = torch.rand(1).item()
           assert val1 == val2
           print("✓ Reproducibility check passed")
+          print("✓ All preliminaries verified successfully")
           '
