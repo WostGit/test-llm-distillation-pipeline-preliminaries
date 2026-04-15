@@ -45,7 +45,6 @@ jobs:
           mkdir -p tests
 
           cat > tests/test_pipeline_preliminaries.py << 'EOF'
-          import pytest
           import torch
           from transformers import AutoModelForCausalLM, AutoTokenizer
 
